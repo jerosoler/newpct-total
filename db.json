@@ -1,0 +1,25 @@
+{
+  "lista": [],
+  "telegram": {
+    "api": "",
+    "user": "",
+    "active": false
+  },
+  "transmission": {
+    "user": "transmission",
+    "pass": "transmission",
+    "active": false
+  },
+  "privateapp": {
+    "user": "",
+    "pass": "",
+    "active": false
+  },
+  "streaming": {
+    "dir": "",
+    "active": false
+  },
+  "ultimabusqueda": {
+    "fecha": ""
+  }
+}
