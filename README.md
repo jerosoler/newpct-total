@@ -1,22 +1,35 @@
 # newpct-total
 
-> Nuxt.js project
+Descargas de newpct a transmission
+* Configuración de autodescargas ( Busca en el [Feed Newpct](www.newpct.com/feed))
+* Configuración de avisos de telegram (Para autodescargas)
+* Configuración de directorio de streaming (Función para copiar el link al vlc ya que html5 no reproduce todos los videos)
+* Configuración de transmission con authentificación
+* Configuración de ruta privada. (Experimental)
 
-## Build Setup
+
+## Instalación
+
+Requiere tener instalado nodejs [Nodejs](https://nodejs.org)
 
 ``` bash
+# Download project 
+git clone https://github.com/jerosoler/newpct-total.git
+# Entrar al directorio 
+cd newpct-total
 # install dependencies
-$ npm install # Or yarn install
-
-# serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm start
+npm install # Or yarn install
+# Montando proyecto
+npm run build
+# Lanzando servidor
+npm start # Or pm2 start npm --name="newpct" -- start
 ```
 
-For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
+## Backup
+Copiar el fichero db.json 
 
-## Backpack
 
-We use [backpack](https://github.com/palmerhq/backpack) to watch and build the application, so you can use the latest ES6 features (module syntax, async/await, etc.).
+## Imagenes: 
+![imagen1](https://github.com/jerosoler/newpct-total/blob/master/docs/inicio.png)
+![imagen2](https://github.com/jerosoler/newpct-total/blob/master/docs/configuracion.png)
+
