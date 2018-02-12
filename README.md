@@ -10,7 +10,7 @@ Descargas de newpct a transmission
 
 ## Instalación
 
-Requiere tener instalado nodejs [Nodejs](https://nodejs.org)
+Requiere tener instalado nodejs [Nodejs](https://nodejs.org) >= 8
 
 ``` bash
 # Download project 
@@ -24,6 +24,9 @@ npm run build
 # Lanzando servidor
 npm start # Or pm2 start npm --name="newpct" -- start
 ```
+
+## Puertos
+Utiliza los puertos 3000 (servidor web) y 3001 (servidor BBDD)
 
 ## Backup
 Copiar el fichero db.json 
