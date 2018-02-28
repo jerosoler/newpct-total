@@ -171,6 +171,7 @@ function stopvideo () {
   width: auto;
   display: block;
   min-height: 259px;
+  max-height: 259px;
 }
 .clearfix:before,
   .clearfix:after {

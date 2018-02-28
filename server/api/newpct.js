@@ -17,11 +17,11 @@ router.get('/listado', function (req, res, next) {
       req.query.busqueda = 'Buscar aqui..';
     }
 
-    var url = 'http://www.newpct.com/?page=buscar&q='+req.query.busqueda;
+    var url = 'http://descargas2020.com/?page=buscar&q='+req.query.busqueda;
     if(!req.query.page) {
-       url = 'http://www.newpct.com/?page=buscar&q='+req.query.busqueda+'&calidad='+req.query.calidad;
+       url = 'http://descargas2020.com/?page=buscar&q='+req.query.busqueda+'&calidad='+req.query.calidad;
     } else {
-      url = 'http://www.newpct.com/?page=buscar&q='+req.query.busqueda+'&pg='+req.query.page+'&calidad='+req.query.calidad;
+      url = 'http://descargas2020.com/?page=buscar&q='+req.query.busqueda+'&pg='+req.query.page+'&calidad='+req.query.calidad;
     }
 
   } else {
@@ -89,7 +89,10 @@ router.post('/addtorrent', function(req, res, next) {
       var urltorrent = '';
       var textofiltrar = $("#tab1 script").html();
       if(textofiltrar != null) {
-        urltorrent = textofiltrar.match(/http:\/\/.*?\.html/);
+        //urltorrent = textofiltrar.match(/http:\/\/.*?\.html/);
+        urltorrent = textofiltrar.match(/http:\/\/descargas2020.*?\"/);
+        urltorrent = urltorrent[0].slice(0,urltorrent[0].length-1);
+
       } else {
         res.json({ error: 'No se ha podido encontrar el torrent' });
       }

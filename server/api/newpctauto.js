@@ -53,7 +53,7 @@ function SearchInList(lastitem) {
 
 
 //Leemos fichero
-http.get('http://www.newpct.com/feed', function(res) {
+http.get('http://descargas2020.com/feed', function(res) {
       var parser = new FeedMe();
 
 
@@ -141,7 +141,9 @@ function addtorrent(url, name) {
       var urltorrent = '';
       var textofiltrar = $("#tab1 script").html();
       if(textofiltrar != null) {
-        urltorrent = textofiltrar.match(/http:\/\/.*?\.html/);
+        //urltorrent = textofiltrar.match(/http:\/\/.*?\.html/);
+        urltorrent = textofiltrar.match(/http:\/\/descargas2020.*?\"/);
+        urltorrent = urltorrent[0].slice(0,urltorrent[0].length-1);
       }
       console.log('urltorrent' + urltorrent);
 
