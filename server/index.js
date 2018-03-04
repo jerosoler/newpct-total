@@ -1,5 +1,7 @@
 import express from 'express'
 import { Nuxt, Builder } from 'nuxt'
+const fs = require('fs');
+
 
 const jsonServer = require('json-server')
 const server = jsonServer.create()
@@ -11,6 +13,8 @@ const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 3000
 
 server.use(middlewares)
+
+
 server.use((req, res, next) => {
   var str = req.headers.origin;
   if(str == undefined) {

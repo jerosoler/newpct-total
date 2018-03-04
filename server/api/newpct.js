@@ -7,7 +7,9 @@ var exec = require('child_process').exec;
 
 const router = Router()
 
-
+function escapeRegExp(string){
+  return string.replace(/([*+?^=!${}()|\[\]\/\\])/g, "\\$1");
+}
 
 /* GET series listidao. */
 router.get('/listado', function (req, res, next) {
@@ -17,11 +19,11 @@ router.get('/listado', function (req, res, next) {
       req.query.busqueda = 'Buscar aqui..';
     }
 
-    var url = 'http://descargas2020.com/?page=buscar&q='+req.query.busqueda;
+    var url = ''+JSON.parse(fs.readFileSync('./db.json', 'utf8')).urlsearch.url+'?page=buscar&q='+req.query.busqueda;
     if(!req.query.page) {
-       url = 'http://descargas2020.com/?page=buscar&q='+req.query.busqueda+'&calidad='+req.query.calidad;
+       url = ''+JSON.parse(fs.readFileSync('./db.json', 'utf8')).urlsearch.url+'?page=buscar&q='+req.query.busqueda+'&calidad='+req.query.calidad;
     } else {
-      url = 'http://descargas2020.com/?page=buscar&q='+req.query.busqueda+'&pg='+req.query.page+'&calidad='+req.query.calidad;
+      url = ''+JSON.parse(fs.readFileSync('./db.json', 'utf8')).urlsearch.url+'?page=buscar&q='+req.query.busqueda+'&pg='+req.query.page+'&calidad='+req.query.calidad;
     }
 
   } else {
@@ -90,7 +92,15 @@ router.post('/addtorrent', function(req, res, next) {
       var textofiltrar = $("#tab1 script").html();
       if(textofiltrar != null) {
         //urltorrent = textofiltrar.match(/http:\/\/.*?\.html/);
-        urltorrent = textofiltrar.match(/http:\/\/descargas2020.*?\"/);
+        var palabra = escapeRegExp(JSON.parse(fs.readFileSync('./db.json', 'utf8')).urlsearch.url)
+        var regex = ''+palabra+'.*?\\"';
+        var rgxp = new RegExp(regex);
+        //urltorrent = textofiltrar.match(/http:\/\/tumejortorrent.*?\"/);
+        urltorrent = textofiltrar.match(rgxp);
+        console.log('hey')
+        console.log(regex)
+        console.log(urltorrent)
+
         urltorrent = urltorrent[0].slice(0,urltorrent[0].length-1);
 
       } else {
@@ -112,6 +122,7 @@ router.post('/addtorrent', function(req, res, next) {
               }
               if(stderr) {
                 res.json({ error: stderr });
+                  return;
               }
           });
         } else {
@@ -126,6 +137,7 @@ router.post('/addtorrent', function(req, res, next) {
               }
               if(stderr) {
                 res.json({ error: stderr });
+                  return;
               }
           });
         }

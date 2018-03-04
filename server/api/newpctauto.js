@@ -13,7 +13,9 @@ console.log("Telegram");
 telegram("Auto Downloader Start")
 
 
-
+function escapeRegExp(string){
+  return string.replace(/([*+?^=!${}()|\[\]\/\\])/g, "\\$1");
+}
 
 // INICIAMOS CRON
 var jobId = crontab.scheduleJob("*/30 * * * *", function(){
@@ -53,7 +55,7 @@ function SearchInList(lastitem) {
 
 
 //Leemos fichero
-http.get('http://descargas2020.com/feed', function(res) {
+http.get(JSON.parse(fs.readFileSync('./db.json', 'utf8')).urlsearch.feed, function(res) {
       var parser = new FeedMe();
 
 
@@ -142,7 +144,12 @@ function addtorrent(url, name) {
       var textofiltrar = $("#tab1 script").html();
       if(textofiltrar != null) {
         //urltorrent = textofiltrar.match(/http:\/\/.*?\.html/);
-        urltorrent = textofiltrar.match(/http:\/\/descargas2020.*?\"/);
+        var palabra = escapeRegExp(JSON.parse(fs.readFileSync('./db.json', 'utf8')).urlsearch.url)
+        var regex = ''+palabra+'.*?\\"';
+        var rgxp = new RegExp(regex);
+        //urltorrent = textofiltrar.match(/http:\/\/tumejortorrent.*?\"/);
+        urltorrent = textofiltrar.match(rgxp);
+
         urltorrent = urltorrent[0].slice(0,urltorrent[0].length-1);
       }
       console.log('urltorrent' + urltorrent);

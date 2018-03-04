@@ -71,7 +71,7 @@ export default {
       video.load()
     },
     copiar (peli) {
-      this.textocopiar = 'http://' + location.host + '/api/video/' + peli
+      this.textocopiar = encodeURI('http://' + location.host + '/api/video/' + peli)
       var copiado = this.$copyText(this.textocopiar).then(function (e) {
         return true
       }, function (e) {

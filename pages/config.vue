@@ -13,7 +13,7 @@
 
 
     <el-dialog title="Nuevo serie/peli" :visible.sync="dialogFormVisible">
-      <el-form >
+      <el-form @submit.native.prevent>
         <el-form-item label="Titulo" >
           <el-input v-model="newtitle" auto-complete="off" ></el-input>
         </el-form-item>
@@ -74,6 +74,41 @@
        </template>
      </el-table-column>
     </el-table>
+  </el-card>
+
+  <br><br>
+  <el-card class="box-card">
+    <el-row>
+      <el-col :span="24"><div class="grid-content bg-purple">
+        <h2 style="float:left;">Última busqueda</h2>
+
+      </div></el-col>
+    </el-row>
+    Última busqueda encontrada: <b>{{ ultimabusqueda.fecha }}</b>
+  </el-card>
+
+  <br><br>
+  <el-card class="box-card">
+    <el-row>
+      <el-col :span="24"><div class="grid-content bg-purple">
+        <h2 style="float:left;">Configurar otra URL</h2>
+
+      </div></el-col>
+    </el-row>
+    <el-select v-model="value" @change="selectfeed(value)" placeholder="Select">
+    <el-option
+      v-for="item in options"
+      :label="item.label"
+      :value="{url: item.url, feed: item.feed, value: item.label}">
+    </el-option>
+    </el-select>
+    <br><br>
+    Url busquedas: <el-input  v-model="urlsearch.url" placeholder="Please input"  ></el-input>
+    <br><br>
+    Url Feed: <el-input  v-model="urlsearch.feed" placeholder="Please input" ></el-input>
+    <br><br>
+    <br><br>
+    <el-button @click="saveurlsearch" type="success">Guardar</el-button>
   </el-card>
 
     <br><br>
@@ -145,6 +180,16 @@
       <br><br>
       <el-button @click="saveprivate" type="success">Guardar</el-button>
     </el-card>
+    <br><br>
+    <el-card class="box-card">
+      <el-row>
+        <el-col :span="24"><div class="grid-content bg-purple">
+          <h2 style="float:left;">Backup</h2>
+
+        </div></el-col>
+      </el-row>
+      <el-button @click="backup" type="success">Backup</el-button>
+    </el-card>
   </section>
 </template>
 
@@ -158,7 +203,30 @@ export default {
     let data3 = await axios.get('http://' + location.hostname + ':3001/transmission')
     let data4 = await axios.get('http://' + location.hostname + ':3001/streaming')
     let data5 = await axios.get('http://' + location.hostname + ':3001/privateapp')
-    return { lista: data, inputVisible: false, inputValue: '', dialogFormVisible: false, newtitle: '', newtags: [], telegram: data2.data, transmission: data3.data, streaming: data4.data, privateapp: data5.data }
+    let data6 = await axios.get('http://' + location.hostname + ':3001/ultimabusqueda')
+    let data7 = await axios.get('http://' + location.hostname + ':3001/urlsearch')
+    return { lista: data, inputVisible: false, inputValue: '', dialogFormVisible: false, newtitle: '', newtags: [], telegram: data2.data, transmission: data3.data, streaming: data4.data, privateapp: data5.data, ultimabusqueda: data6.data, urlsearch: data7.data }
+  },
+  data () {
+    return {
+      options: [{
+        value: 'Option1',
+        label: 'Tv sin pagar',
+        url: 'http://tvsinpagar.com/',
+        feed: 'http://tvsinpagar.com/feed'
+      }, {
+        value: 'Option2',
+        label: 'Descargas2020',
+        url: 'http://descargas2020.com/',
+        feed: 'http://descargas2020.com/feed'
+      }, {
+        value: 'Option3',
+        label: 'Tu mejor torrent',
+        url: 'http://tumejortorrent.com/',
+        feed: 'http://tumejortorrent.com/feed'
+      }],
+      value: ''
+    }
   },
   head () {
     return {
@@ -225,6 +293,11 @@ export default {
           // this.lista = data
         })
     },
+    selectfeed: function (value) {
+      this.urlsearch.url = value.url
+      this.urlsearch.feed = value.feed
+      this.value = value.value
+    },
     handleDelete: async function (index, row) {
       var respuesta = await axios.delete('http://' + location.hostname + ':3001/lista/' + row)
         .then(function (response) {
@@ -233,6 +306,19 @@ export default {
       if (respuesta) {
         this.refreshlist()
         this.removed()
+      }
+    },
+    saveurlsearch: async function () {
+      this.dialogFormVisible = false
+
+      var respuesta = await axios.post('http://' + location.hostname + ':3001/urlsearch', {
+        url: this.urlsearch.url,
+        feed: this.urlsearch.feed
+      }).then(function (response) {
+        return true
+      })
+      if (respuesta) {
+        this.saved()
       }
     },
     savetelegram: async function () {
@@ -294,6 +380,9 @@ export default {
       if (respuesta) {
         this.saved()
       }
+    },
+    backup: function () {
+      window.open('/api/backup')
     }
   }
 }
@@ -302,6 +391,10 @@ export default {
 <style scoped>
 .el-tag + .el-tag, .el-button {
     margin-left: 10px;
+  }
+  .input-new-tag {
+    width: 100px;
+      margin-left: 10px;
   }
 
 </style>

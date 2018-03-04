@@ -12,6 +12,10 @@ const router = Router()
 router.use(newpct)
 router.use(streaming)
 
+router.get('/backup', function(req,res,next){
+  res.download('./db.json');
+});
+
 router.get('/loginvalido', function(req, res, next) {
   var loggin = JSON.parse(fs.readFileSync('./db.json', 'utf8')).privateapp;
   if(loggin.active) {
