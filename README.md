@@ -13,9 +13,9 @@ Descargas de newpct a transmission
 Requiere tener instalado nodejs [Nodejs](https://nodejs.org) >= 8
 
 ``` bash
-# Download project 
+# Download project
 git clone https://github.com/jerosoler/newpct-total.git
-# Entrar al directorio 
+# Entrar al directorio
 cd newpct-total
 # install dependencies
 npm install # Or yarn install
@@ -29,10 +29,17 @@ npm start # Or pm2 start npm --name="newpct" -- start
 Utiliza los puertos 3000 (servidor web) y 3001 (servidor BBDD)
 
 ## Backup
-Copiar el fichero db.json 
+Descargar desde el aparatado config
 
 
-## Imagenes: 
+## Imagenes:
 ![imagen1](https://github.com/jerosoler/newpct-total/blob/master/docs/inicio.png)
 ![imagen2](https://github.com/jerosoler/newpct-total/blob/master/docs/configuracion.png)
 
+## Changelog
+04-03-2018
+* Listado de sitios
+* Corregido copiar link de Streaming
+* Añadido boton para descargar el Backup
+* Corregido formulario de añadir nueva series
+* Bugs menores
