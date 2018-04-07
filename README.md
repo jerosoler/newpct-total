@@ -37,6 +37,10 @@ Descargar desde el aparatado config
 ![imagen2](https://github.com/jerosoler/newpct-total/blob/master/docs/configuracion.png)
 
 ## Changelog
+07-04-2018
+* Añadido nuevo sistema de búsqueda automatica
+* Añadido Torrentrapid
+
 04-03-2018
 * Listado de sitios
 * Corregido copiar link de Streaming

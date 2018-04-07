@@ -1,7 +1,8 @@
 import { Router } from 'express'
 
 import newpct from './newpct'
-import newpctauto from './newpctauto'
+//import newpctauto from './newpctauto'
+import newpctautosearch from './newpctautosearch'
 import streaming from './streaming'
 
 const fs = require('fs');

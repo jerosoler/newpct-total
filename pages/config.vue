@@ -224,6 +224,11 @@ export default {
         label: 'Tu mejor torrent',
         url: 'http://tumejortorrent.com/',
         feed: 'http://tumejortorrent.com/feed'
+      }, {
+        value: 'Option4',
+        label: 'Torrentrapid',
+        url: 'http://torrentrapid.com/',
+        feed: 'http://torrentrapid.com/feed'
       }],
       value: ''
     }
