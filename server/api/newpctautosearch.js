@@ -12,7 +12,7 @@ var exec = require('child_process').exec;
 
 telegram("Auto Downloader Start Search");
 
-var jobId = crontab.scheduleJob("*/1 * * * *", function(){
+var jobId = crontab.scheduleJob("*/10 * * * *", function(){
 
 var busqueda =  JSON.parse(fs.readFileSync('./db.json', 'utf8')).lista;
 
