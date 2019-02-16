@@ -12,43 +12,44 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
   "repository": {
-   "type": "git",
-   "url": "git+https://github.com/jerosoler/newpct-total.git"
-   },
-   "keywords": [
-     "newpct",
-     "auto",
-     "transmission",
-     "streaming"
-   ],
+    "type": "git",
+    "url": "git+https://github.com/jerosoler/newpct-total.git"
+  },
+  "keywords": [
+    "newpct",
+    "auto",
+    "transmission",
+    "streaming"
+  ],
   "dependencies": {
     "axios": "^0.16.2",
-    "body-parser": "^1.18.2",
+    "body-parser": "^1.18.3",
     "cheerio": "^1.0.0-rc.2",
-    "cross-env": "^5.0.1",
-    "element-ui": "^2.0.11",
-    "express": "^4.15.3",
+    "cross-env": "^5.2.0",
+    "element-ui": "^2.5.4",
+    "express": "^4.16.4",
     "express-session": "^1.15.6",
-    "feedme": "^1.1.2",
+    "feedme": "^1.2.0",
     "find": "^0.2.9",
-    "json-server": "^0.12.1",
+    "json-server": "^0.12.2",
     "mz": "^2.7.0",
     "node-crontab": "0.0.8",
-    "nuxt": "^1.0.0-rc3",
+    "nuxt": "^1.4.5",
     "source-map-support": "^0.4.15",
-    "video-stream": "^1.2.0",
+    "video-stream": "^1.2.1",
+    "vue": "^2.6.6",
     "vue-clipboard2": "0.0.8"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
     "backpack-core": "^0.4.1",
-    "eslint": "^4.3.0",
+    "eslint": "^4.19.1",
     "eslint-config-standard": "^10.2.1",
     "eslint-loader": "^1.9.0",
     "eslint-plugin-html": "^3.1.1",
-    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-node": "^5.1.1",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0"
   }
 }

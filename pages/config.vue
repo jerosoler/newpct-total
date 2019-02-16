@@ -20,7 +20,7 @@
         <el-form-item label="Filtros" >
           <el-tag
             :key="tag"
-            v-for="tag in newtags"
+            v-for="(tag, index) in newtags"
             closable
             :disable-transitions="false"
             @close="handleClose(tag)">
@@ -97,7 +97,7 @@
     </el-row>
     <el-select v-model="value" @change="selectfeed(value)" placeholder="Select">
     <el-option
-      v-for="item in options"
+      v-for="(item, index) in options" :key="index"
       :label="item.label"
       :value="{url: item.url, feed: item.feed, value: item.label}">
     </el-option>
@@ -211,9 +211,9 @@ export default {
     return {
       options: [{
         value: 'Option1',
-        label: 'Tv sin pagar',
-        url: 'http://tvsinpagar.com/',
-        feed: 'http://tvsinpagar.com/feed'
+        label: 'PCT New',
+        url: 'http://pctnew.com/',
+        feed: 'http://pctnew.com/feed'
       }, {
         value: 'Option2',
         label: 'Descargas2020',

@@ -160,7 +160,7 @@ function addtorrentserie(url, name) {
         var nombre = lista[x][0];
         nombre = nombre.substring(6, nombre.lenght);
         nombre = nombre.replace("-", "");
-        nombre = nombre.replace("Calidad", " Calidad ");
+        nombre = nombre.replace("Calidad ", " Calidad de la Serie ");
         console.log(nombre + "-"+ name);
         if(nombre == name) {
           //console.log("igual");
