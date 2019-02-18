@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="header">
     <el-menu   mode="horizontal"  background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
       <nuxt-link to="/"><el-menu-item index="1">NewPct Total</el-menu-item></nuxt-link>
       <nuxt-link v-if="this.$store.state.streaming" to="streaming"><el-menu-item index="2">Streaming</el-menu-item></nuxt-link>
@@ -30,3 +30,11 @@ export default {
   }
 }
 </script>
+<style scoped>
+.header {
+  background-color: #545c64;
+}
+.el-menu-item {
+  float: left;
+}
+</style>
