@@ -3,7 +3,7 @@
     <div class="busqueda">
       <el-row>
         <el-col :span="18">
-          <el-input class="input" placeholder="Please input" :value="input"  @keyup.enter.native="searching"></el-input>
+          <el-input class="input" placeholder="Please input" v-model="inputval"  @keyup.enter.native="searching"></el-input>
         </el-col>
         <el-col :span="5" :offset="1">
           <el-select :value="calidad" placeholder="Select" @change="calidadchange">
@@ -44,6 +44,11 @@ export default {
   computed: mapState([
     'input', 'calidad'
   ]),
+  data () {
+    return {
+      inputval: ''
+    }
+  },
   methods: {
     async searching (e) {
       this.$store.commit('changesearch', e.target.value)
