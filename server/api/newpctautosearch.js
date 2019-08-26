@@ -36,11 +36,11 @@ function SearchInList(lastitem) {
   return encontrado;
 }
 
-var busquedarapida = 'Buscar aqui..';
-var url = ''+JSON.parse(fs.readFileSync('./db.json', 'utf8')).urlsearch.url+'?page=buscar&q='+busquedarapida;
+var busquedarapida = '';
+var url = JSON.parse(fs.readFileSync('./db.json', 'utf8')).urlsearch.url+'/get/result/';
 
 
-request(url, function (error, response, html) {
+/*request(url, function (error, response, html) {
 
   if (!error && response.statusCode == 200) {
     //item_count2++;
@@ -55,9 +55,7 @@ request(url, function (error, response, html) {
       var titulo2 = $(this).children("h2").text();
     //  if(!req.query.busquedalista) {
         var view = titulo.indexOf("color:red");
-    /*  } else {
-        var view = -1;
-      }*/
+
 
 
       //titulo = titulo.replace(/color:red/g, 'color:black');
@@ -101,7 +99,70 @@ request(url, function (error, response, html) {
   } else {
     console.log("error");
   }
-});
+}); */
+
+request.post({
+  headers: {'content-type' : 'application/x-www-form-urlencoded'},
+  url:     JSON.parse(fs.readFileSync('./db.json', 'utf8')).urlsearch.url+'/get/result/',
+  body:    "s=",
+  json: true,
+}, function(error, response, body){
+  //console.log(response);
+  var lista = [];
+  var listatorrents = body.data.torrents[0];
+  //listatorrentsnum = JSON.parse(listatorrents);
+  //console.log(listatorrents);
+  if(listatorrents != null) {
+    var listatorrentsnum = Object.keys(listatorrents).length;
+  } else {
+    var listatorrentsnum = 0;
+  }
+
+  for(var i=0; i < listatorrentsnum;i++) {
+      var titulo = listatorrents[i].torrentName;
+      //console.log(titulo);
+      var linkp = JSON.parse(fs.readFileSync('./db.json', 'utf8')).urlsearch.url+"/"+listatorrents[i].guid;
+      var view = linkp.indexOf("series");
+      var fecha = listatorrents[i].torrentDateAdded;
+      var peso = listatorrents[i].torrentSize;
+      //var imagen = JSON.parse(fs.readFileSync('./db.json', 'utf8')).urlsearch.url+listatorrents[i].imagen;
+      lista.push([titulo, linkp, view, fecha, peso]);
+  }
+
+//Aqui ya tenemos la lista! Vamos a filtra! ;)
+//Recordatorio [Titulo texto, enlace, -1 Pelicula otros serie ]
+var lastitem =  JSON.parse(fs.readFileSync('./db.json', 'utf8')).ultimabusqueda.fecha;
+var stopsearch = 0;
+for (x=0;x<lista.length;x++){
+
+  var d = new Date();
+
+  if(x==0) {
+    request({ url: 'http://localhost:3001/ultimabusqueda', method: 'PUT', json: {fecha: lista[x][0]}});
+  }
+
+  if(lastitem == lista[x][0]) {
+    stopsearch = 1;
+  }
+  if(stopsearch == 0) {
+    console.log(x + "-" + lista[x][0] + " - " + d);
+  //console.log(x);
+    var searchtrue = SearchInList(lista[x][0]);
+    if(searchtrue) {
+      //enviamos a torrent
+      telegram("Encontrado: " + lista[x][0]);
+      if(lista[x][2] > -1) {
+        addtorrentserie(lista[x][1], lista[x][0], lista[x][3], lista[x][4]);
+      } else {
+        addtorrent(lista[x][1], lista[x][0]);
+      }
+
+    }
+  }
+}
+
+
+})
 
 
 }); // FIN CRON JOB
@@ -126,9 +187,10 @@ function escapeRegExp(string){
 
 
 
-function addtorrentserie(url, name) {
+function addtorrentserie(url, name, fechaok, pesook) {
 //console.log("Serie");
-
+  var fecha;
+  var peso;
   request(url, function (error, response, html) {
 
     if (!error && response.statusCode == 200) {
@@ -149,7 +211,13 @@ function addtorrentserie(url, name) {
 
         //titulo = titulo.replace(/color:red/g, 'color:black');
         var linkp = $(this).attr('href');
-        lista.push([titulo2, linkp]);
+        var spans = $(this).parent().children("span");
+
+       fecha = $(spans[0]).text().replace(/\-/g,'/');
+
+       peso = $(spans[1]).text();
+
+        lista.push([titulo2, linkp, fecha, peso]);
       });
 
 
@@ -158,6 +226,11 @@ function addtorrentserie(url, name) {
       for (x=0;x<lista.length;x++){
 
         var nombre = lista[x][0];
+        console.log(fecha);
+        console.log(fechaok);
+        console.log(peso);
+        console.log(pesook);
+        /*
         nombre = nombre.substring(6, nombre.lenght);
         nombre = nombre.replace("-", "");
         nombre = nombre.replace("Calidad ", " Calidad de la Serie ");
@@ -166,6 +239,13 @@ function addtorrentserie(url, name) {
           //console.log("igual");
           addtorrent(lista[x][1], lista[x][0]);
         }
+        */
+
+        if(fecha == fechaok && peso == pesook) {
+          //console.log("igual");
+          addtorrent(lista[x][1], lista[x][0]);
+        }
+
 
       }
 
@@ -190,12 +270,22 @@ function addtorrent(url, name) {
       if(textofiltrar != null) {
         //urltorrent = textofiltrar.match(/http:\/\/.*?\.html/);
         var palabra = escapeRegExp(JSON.parse(fs.readFileSync('./db.json', 'utf8')).urlsearch.url)
+        if(palabra.startsWith("https")) {
+          palabra = palabra.substr(6);
+        }
+        if(palabra.startsWith("http")) {
+          palabra = palabra.substr(5);
+        }
         var regex = ''+palabra+'.*?\\"';
         var rgxp = new RegExp(regex);
         //urltorrent = textofiltrar.match(/http:\/\/tumejortorrent.*?\"/);
         urltorrent = textofiltrar.match(rgxp);
 
         urltorrent = urltorrent[0].slice(0,urltorrent[0].length-1);
+
+        if(urltorrent.startsWith("//")) {
+            urltorrent = 'https:'+urltorrent;
+        }
       }
       console.log('urltorrent' + urltorrent);
 

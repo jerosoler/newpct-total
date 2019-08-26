@@ -28,14 +28,14 @@
     <el-row>
     <div class="divpagina" v-if="!this.$store.state.serie">
       <div v-for="(list, index) in lista.paginacion" :key="index" class="paginacion">
-        <div class="number" :class="list[1]" v-if="list[0] != '...'" @click="searchpage(list[0])">{{list[0]}}</div>
-        <div class="nonumber" v-else >{{list[0]}}</div>
+        <div class="number" :class="list" v-if="list != '...'" @click="searchpage(list)">{{list}}</div>
+        <div class="nonumber" v-else >{{list}}</div>
       </div>
     </div>
     <div class="divpagina" v-else>
       <div v-for="(list, index) in lista.paginacion" :key="index" class="paginacion">
-        <div class="number" :class="list[1]" v-if="list[0] != '...'" @click="searchpageserie(list[0])">{{list[0]}}</div>
-        <div class="nonumber" v-else >{{list[0]}}</div>
+        <div class="number" :class="list" v-if="list != '...'" @click="searchpageserie(list[0])">{{list}}</div>
+        <div class="nonumber" v-else >{{list}}</div>
       </div>
     </div>
     </el-row>
@@ -63,7 +63,7 @@ export default {
     this.$store.commit('validateuser')
     this.$store.state.loading = true
     let data = await axios.get('/api/listado', { params: {
-      busqueda: 'Buscar aqui..',
+      busqueda: '',
       calidad: ''
     }
     })
@@ -112,7 +112,7 @@ export default {
       console.log(this.$store.state.lastserie)
       console.log('--')
       console.log(seriebuscar)
-      let data = await axios.get('/api/listado', { params: {
+      let data = await axios.get('/api/listadoserie', { params: {
         busquedalista: seriebuscar + '/pg/' + page
       }
       })
@@ -123,7 +123,7 @@ export default {
       this.$store.state.loading = true
       this.$store.state.lastserie = serie
       this.$store.state.serie = true
-      let data = await axios.get('/api/listado', { params: {
+      let data = await axios.get('/api/listadoserie', { params: {
         busquedalista: serie
       }
       })

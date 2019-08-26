@@ -55,7 +55,7 @@ export default {
       this.$store.state.loading = true
       var busquedacorregida
       if (this.$store.state.input === '') {
-        busquedacorregida = 'Buscar aqui..'
+        busquedacorregida = ''
       } else {
         busquedacorregida = this.$store.state.input
       }
@@ -73,7 +73,7 @@ export default {
       this.$store.state.loading = true
       var busquedacorregida
       if (this.$store.state.input === '') {
-        busquedacorregida = 'Buscar aqui..'
+        busquedacorregida = ''
       } else {
         busquedacorregida = this.$store.state.input
       }
