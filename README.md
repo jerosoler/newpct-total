@@ -37,6 +37,9 @@ Descargar desde el aparatado config
 ![imagen2](https://github.com/jerosoler/newpct-total/blob/master/docs/configuracion.png)
 
 ## Changelog
+26-08-2019
+* Corregido para descargas2020
+
 07-04-2018
 * Añadido nuevo sistema de búsqueda automatica
 * Añadido Torrentrapid
