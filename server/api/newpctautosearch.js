@@ -104,7 +104,7 @@ var url = JSON.parse(fs.readFileSync('./db.json', 'utf8')).urlsearch.url+'/get/r
 request.post({
   headers: {'content-type' : 'application/x-www-form-urlencoded'},
   url:     JSON.parse(fs.readFileSync('./db.json', 'utf8')).urlsearch.url+'/get/result/',
-  body:    "s=",
+  body:    "s=descargas2020",
   json: true,
 }, function(error, response, body){
   //console.log(response);

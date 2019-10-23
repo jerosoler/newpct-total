@@ -75,8 +75,11 @@ router.get('/listado', function (req, res, next) {
     }
   });
   */
-  console.log(req.query.busqueda);
+  console.log("BUSQUEDA");
 
+  if(req.query.busqueda == "") {
+    req.query.busqueda = "descargas2020";
+  }
 
   /*axios.post(''+JSON.parse(fs.readFileSync('./db.json', 'utf8')).urlsearch.url+'/get/result/', {
       s: req.query.busqueda
