@@ -104,7 +104,8 @@ var url = JSON.parse(fs.readFileSync('./db.json', 'utf8')).urlsearch.url+'/get/r
 request.post({
   headers: {'content-type' : 'application/x-www-form-urlencoded'},
   url:     JSON.parse(fs.readFileSync('./db.json', 'utf8')).urlsearch.url+'/get/result/',
-  body:    "s=descargas2020",
+  body:    "s=",
+  //body:    "s=descargas2020",
   json: true,
 }, function(error, response, body){
   //console.log(response);
@@ -226,9 +227,9 @@ function addtorrentserie(url, name, fechaok, pesook) {
       for (x=0;x<lista.length;x++){
 
         var nombre = lista[x][0];
-        console.log(fecha);
+        console.log(lista[x][2]);
         console.log(fechaok);
-        console.log(peso);
+        console.log(lista[x][3]);
         console.log(pesook);
         /*
         nombre = nombre.substring(6, nombre.lenght);
@@ -241,7 +242,7 @@ function addtorrentserie(url, name, fechaok, pesook) {
         }
         */
 
-        if(fecha == fechaok && peso == pesook) {
+        if(lista[x][2] == fechaok && lista[x][3] == pesook) {
           //console.log("igual");
           addtorrent(lista[x][1], lista[x][0]);
         }
