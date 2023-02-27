@@ -34,7 +34,7 @@
     "json-server": "^0.12.2",
     "mz": "^2.7.0",
     "node-crontab": "0.0.8",
-    "nuxt": "^1.4.5",
+    "nuxt": "^3.2.2",
     "source-map-support": "^0.4.15",
     "video-stream": "^1.2.1",
     "vue": "^2.6.6",
